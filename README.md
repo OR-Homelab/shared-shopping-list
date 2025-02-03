@@ -1,2 +1,2 @@
-# f-llles-indk-bsliste
+# Shared shopping list
 A shared shopping list
