@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Varela+Round&display=swap');
+body {
+  user-select: none;
+}
+main img {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+}
+#grid-wrapper {
+  width: calc(100% - 2rem);
+  height: calc(100% - 2rem);
+  margin: 1rem;
+  grid-template-columns: repeat(auto-fit, 1fr);
+}
+::-webkit-scrollbar {display: none;}
+main img#viewing {
+  width:85svw;
+  height:85svh;
+  object-fit: contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  border-radius: 0;
+}
+#download-link, #play-btn {display: none !important;}
+main img#viewing ~ .view-container, main img#viewing ~ #download-link, main img#viewing ~ #play-btn {display: block !important;}
+.view-container {
+  height: 100svh;
+  width: 100svw;
+  background-color: rgba(0, 0, 0, 0.75);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: none;
+}
+#download, #remove {
+  height: 1.5rem;
+  width: 1.5rem;
+  position: absolute;
+  top: 0.5rem;
+  background-color: white;
+  border-radius: 0;
+  cursor: pointer;
+  z-index: 11;
+}
+#remove {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  text-align: center;
+  right: 0.5rem;
+  font-family: "Varela Round", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #1C274C;
+}
+#download {right: 2.5rem;}
+
+/* For Videos Only */
+#play-btn {
+  height: 85svh;
+  width: 85svw;
+  background-color: rgba(0, 0, 0, 0.75);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+}
+#play-img {
+  height: 20svh;
+  width: 20svh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

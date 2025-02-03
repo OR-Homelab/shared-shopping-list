@@ -1,0 +1,23 @@
+version: '1.0'
+services:
+  web:
+    build: .
+    ports:
+      - "80:8080"
+    environment:
+      - PORT=8080
+      - MONGODB_URL=mongodb://db/shopping-list
+  db:
+    image: "mongo"
+    restart: "always"
+    volumes:
+      - databasedata:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: shopping-list
+volumes:
+  databasedata:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./appdata/databasedata
+      o: bind

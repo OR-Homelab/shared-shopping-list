@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/header.ejs') %>
+<body>
+    <div class="page-wrapper">
+        <%- include('partials/nav.ejs') %>
+        <main>
+            <div id="grid-wrapper">
+                <table>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Name</th>
+                        <th>Price pr.</th>
+                        <th>Total price</th>
+                    </tr>
+
+                    <% for (let i = 0; i < items.length; i++) { %>
+                        <tr>
+                            <td><%- items[i].amount%></td>
+                            <td><%- items[i].name%></td>
+                            <td><%- items[i].price%> DKK</td>
+                            <td><%- items[i].total%> DKK</td>
+                        </tr>
+                    <%};%>
+                    <h1>Total price: <%- total %></h1>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
