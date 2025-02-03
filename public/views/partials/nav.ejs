@@ -1,0 +1,29 @@
+<input type="checkbox" id="dropdown">
+<label for="dropdown"><div>▶</div></label>
+<nav>
+    <a href="/logout" id="logout">
+        <img src="/images/logout.svg" title="Log out!">
+    </a>
+    <ul>
+        <li <% if (page_name === 'list') { %> class="active" <% } %>>
+            <a href="list">
+                <img src="/images/list.svg">List
+            </a>
+        </li>
+        <li <% if (page_name === 'add-item') { %> class="active" <% } %>>
+            <a href="add-item">
+                <img src="/images/add-item.svg">Add item
+            </a>
+        </li>
+        <li <% if (page_name === 'receipts') { %> class="active" <% } %>>
+            <a href="receipts">
+                <img src="/images/receipt.svg">Receipts
+            </a>
+        </li>
+        <li <% if (page_name === 'deleted') { %> class="active" <% } %>>
+            <a href="deleted">
+                <img src="/images/trashcan.svg">Deleted
+            </a>
+        </li>
+    </ul>
+</nav>

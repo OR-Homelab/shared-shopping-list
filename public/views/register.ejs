@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Register</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/colors.css">
+</head>
+<body>
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+      <h2 class="active"> REGISTER USER </h2>
+
+      <!-- Login Form -->
+      <form action="/register" method="POST">
+        <input type="text" id="login" class="fadeIn" name="username" placeholder="Username" required>
+        <input type="password" id="password" class="fadeIn" name="password" placeholder="Password" required>
+        <input type="password" id="verifypassword" class="fadeIn" name="verifypassword" placeholder="Verify Password" required>
+        <br>
+        <input type="submit" class="fadeIn" value="Register" name="register">
+      </form>
+    </div>
+  </div>
+</body>
+</html>
