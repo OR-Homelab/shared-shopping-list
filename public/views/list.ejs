@@ -5,27 +5,40 @@
     <div class="page-wrapper">
         <%- include('partials/nav.ejs') %>
         <main>
-            <div id="grid-wrapper">
+            <h1 id="total-price">Total price: <%- total %></h1>
+            <form action="/list" method="POST" id="submit-form">
+                <input type="hidden" value="" id="delete-id" name="deleteId">
                 <table>
-                    <tr>
-                        <th>Amount</th>
-                        <th>Name</th>
-                        <th>Price pr.</th>
-                        <th>Total price</th>
-                    </tr>
-
-                    <% for (let i = 0; i < items.length; i++) { %>
+                    <thead>
                         <tr>
-                            <td><%- items[i].amount%></td>
-                            <td><%- items[i].name%></td>
-                            <td><%- items[i].price%> DKK</td>
-                            <td><%- items[i].total%> DKK</td>
+                            <th>Amount</th>
+                            <th>Name</th>
+                            <th>Price pr.</th>
+                            <th>Total price</th>
+                            <th></th>
                         </tr>
-                    <%};%>
-                    <h1>Total price: <%- total %></h1>
+                    </thead>
+                    <tbody>
+                        <% for (let i = 0; i < items.length; i++) { %>
+                            <tr>
+                                <td><%- items[i].amount%></td>
+                                <td><%- items[i].name%></td>
+                                <td><%- items[i].price%> DKK</td>
+                                <td><%- items[i].total%> DKK</td>
+                                <td><input type="button" value="Delete" name="delete" onclick="submitForm('<%- items[i].id %>')"></td>
+                            </tr>
+                        <%};%>
+                    </tbody>
                 </table>
-            </div>
+            </form>
         </main>
     </div>
+
+    <script>
+        function submitForm(id) {
+            document.getElementById("delete-id").setAttribute("value", id);
+            document.getElementById("submit-form").submit();
+        }
+    </script>
 </body>
 </html>
