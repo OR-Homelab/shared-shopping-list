@@ -1,12 +1,13 @@
 version: '1.0'
 services:
   web:
-    # TODO: Remember to pull image instead of building from Dockerfile.
-    build: .
+    image: "theflowdkk/shared-shopping-list"
     ports:
       - "80:8080"
     environment:
       - PORT=8080
+      - SESSION_SECRET=";w$jb`.j6#PDG&gvxpc-@&JyU)dtD;"
+      - REQUIRE_PASSWORD_FOR_REGISTER=True
       - MONGODB_URL=mongodb://db/shopping-list
   db:
     image: "mongo"
@@ -22,3 +23,4 @@ volumes:
       type: none
       device: ./appdata/databasedata
       o: bind
+  # TODO: Maybe add .env folder to make it easier to change environment variables. (The database is saved so deletion and recreation is always an option)
