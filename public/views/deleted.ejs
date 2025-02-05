@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/header.ejs') %>
+<body>
+    <div class="page-wrapper">
+        <%- include('partials/nav.ejs') %>
+        <main>
+            <form action="/deleted" method="POST" id="submit-form">
+                <input type="hidden" value="" id="readd-id" name="readdId">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Name</th>
+                            <th>Price pr.</th>
+                            <th>Total price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let i = 0; i < items.length; i++) { %>
+                            <tr>
+                                <td><%- items[i].amount%></td>
+                                <td><%- items[i].name%></td>
+                                <td><%- items[i].price%> DKK</td>
+                                <td><%- items[i].total%> DKK</td>
+                                <td><input type="button" value="Readd" name="readd" onclick="submitForm('<%- items[i].id %>')"></td>
+                            </tr>
+                        <%};%>
+                    </tbody>
+                </table>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        function submitForm(id) {
+            document.getElementById("readd-id").setAttribute("value", id);
+            document.getElementById("submit-form").submit();
+        }
+    </script>
+</body>
+</html>

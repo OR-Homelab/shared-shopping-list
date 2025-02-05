@@ -21,9 +21,40 @@ app.get('/receipts', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
     res.render('add-item', {"page_name": "receipts"});
 });
 
-app.get('/deleted', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
-    res.render('add-item', {"page_name": "deleted"});
+
+// Deleted
+app.get('/deleted', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday = yesterday.toISOString();
+
+    await itemModel.deleteMany({"active": false, "age": {$lte: yesterday}}).then(obj => {
+        if (obj.deletedCount != 0) {
+            console.log(`Deleted ${obj.deletedCount} old documents.`);
+        }
+    });
+
+    itemModel.find({active: false}).exec().then(items => {res.render('deleted', {"page_name": "deleted", "items": items})});
 });
+
+app.post('/deleted', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    const readdId = req.body.readdId;
+    
+    if (readdId === "") {
+        return;
+    }
+    try {
+        await itemModel.findByIdAndUpdate(readdId, {$set: {active: true}});
+    } catch (err) {
+        console.log('Error while readding item.')
+        console.log(err);
+        return err;
+    }
+
+    console.log("Item readded.");
+    return res.redirect('/deleted');
+});
+
 
 // List
 app.get('/list', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
@@ -34,7 +65,7 @@ app.get('/list', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
         }
         sum = result[0].amount;
     });
-    itemModel.find({}).exec().then(items => {res.render('list', {"page_name": "list", "items": items, "total": sum})});
+    itemModel.find({active: true}).exec().then(items => {res.render('list', {"page_name": "list", "items": items, "total": sum})});
 });
 
 app.post('/list', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
@@ -44,7 +75,7 @@ app.post('/list', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
         return;
     }
     try {
-        await itemModel.findByIdAndDelete(deleteId);
+        await itemModel.findByIdAndUpdate(deleteId, {$set: {active: false , age: new Date()}});
     } catch (err) {
         console.log('Error while removing item.')
         console.log(err);
@@ -63,16 +94,23 @@ app.get('/add-item', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
 
 app.post('/add-item', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
     const itemName = req.body.name;
-    const itemAmount = parseFloat(req.body.amount);
+
     var itemPrice;
     if (req.body.price === "") {
         itemPrice = 0;
     } else {
         itemPrice = parseFloat(req.body.price);
     }
+
+    var itemAmount;
+    if (req.body.amount === "") {
+        itemAmount = 1;
+    } else {
+        itemAmount = parseFloat(req.body.price);
+    }
     
 
-    itemModel.collection.insertOne({name: itemName, amount: itemAmount, price: itemPrice, total: itemPrice * itemAmount, active: true}, (err) => {
+    itemModel.collection.insertOne({name: itemName, amount: itemAmount, price: itemPrice, total: itemPrice * itemAmount, active: true, age: new Date()}, (err) => {
         if (err) {
             console.log('Error while registering item.');
             console.log(err);

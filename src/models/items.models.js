@@ -9,7 +9,8 @@ const Item = new Schema({
   amount: Number,
   price: Number,
   total: Number,
-  active: Boolean
+  active: Boolean,
+  age: Date
 });
 
 module.exports = mongoose.model('Item', Item);
