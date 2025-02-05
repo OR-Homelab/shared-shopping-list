@@ -17,12 +17,6 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/list', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
-    var sum = 0
-    itemModel.aggregate([{ $group: { _id: null, amount: { $sum: "$total" } }}]).then(result => {sum = result[0].amount});
-    itemModel.find({}).exec().then(items => {res.render('list', {"page_name": "list", "items": items, "total": sum})});
-});
-
 app.get('/receipts', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
     res.render('add-item', {"page_name": "receipts"});
 });
@@ -31,16 +25,52 @@ app.get('/deleted', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
     res.render('add-item', {"page_name": "deleted"});
 });
 
+// List
+app.get('/list', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    var sum = 0
+    await itemModel.aggregate([{ $group: { _id: null, amount: { $sum: "$total" } }}]).then(result => {
+        if (result[0] === undefined) {
+            return;
+        }
+        sum = result[0].amount;
+    });
+    itemModel.find({}).exec().then(items => {res.render('list', {"page_name": "list", "items": items, "total": sum})});
+});
+
+app.post('/list', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    const deleteId = req.body.deleteId;
+    
+    if (deleteId === "") {
+        return;
+    }
+    try {
+        await itemModel.findByIdAndDelete(deleteId);
+    } catch (err) {
+        console.log('Error while removing item.')
+        console.log(err);
+        return err;
+    }
+
+    console.log("Item removed.");
+    return res.redirect('/list');
+});
+
 
 // Add-item
 app.get('/add-item', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
     res.render('add-item', {"page_name": "add-item"});
 });
 
-function addItemFunc(req, res) {
+app.post('/add-item', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
     const itemName = req.body.name;
     const itemAmount = parseFloat(req.body.amount);
-    const itemPrice = parseFloat(req.body.price);
+    var itemPrice;
+    if (req.body.price === "") {
+        itemPrice = 0;
+    } else {
+        itemPrice = parseFloat(req.body.price);
+    }
+    
 
     itemModel.collection.insertOne({name: itemName, amount: itemAmount, price: itemPrice, total: itemPrice * itemAmount, active: true}, (err) => {
         if (err) {
@@ -52,11 +82,7 @@ function addItemFunc(req, res) {
         console.log('Item registered.');
     });
 
-        return res.redirect('/add-item');
-}
-
-app.post('/add-item', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
-    addItemFunc(req, res);
+    return res.redirect('/add-item');
 });
 
 
