@@ -55,4 +55,5 @@ tbody tr td:last-child input {
   font-size: 1rem;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
