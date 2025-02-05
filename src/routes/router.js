@@ -122,17 +122,17 @@ function registerFunc(req, res) {
         console.log('User registered.');
     });
 
-        return res.redirect('/register');
+    return res.redirect('/register');
 };
 
 if (process.env.REQUIRE_PASSWORD_FOR_REGISTER === 'False') {
     app.get('/register', (req, res) => {
-        res.render('register')
+        res.render('register', {"page_name": "register"});
     });
 } else {
     app.get('/register', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
         if (req.user.admin) {
-            res.render('register')
+            res.render('register', {"page_name": "register"});
         } else {
             res.redirect('/logout');
         };

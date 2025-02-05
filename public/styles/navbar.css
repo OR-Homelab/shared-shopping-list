@@ -38,6 +38,18 @@ nav #logout img {
     position: absolute;
     left: 0 !important;
 }
+nav #register {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.50rem;
+    background-color: var(--background-color);
+}
+nav #register img {
+    position: absolute;
+    top: -0.9rem;
+    left: -0.9rem;
+    scale: 40%;
+}
 nav ul {
     width: 10rem;
     line-height: 2rem;
@@ -45,7 +57,7 @@ nav ul {
     margin: 0;
     padding: 0;
 }
-nav ul li, nav #logout {
+nav ul li, nav #logout, nav #register {
     width: 2rem;
     height: 2rem;
     border-radius: 5px;
@@ -63,7 +75,7 @@ nav ul li.active, nav ul li:hover {
 nav:hover ul li.active, nav ul li:hover {
     width: 9.5rem;
 }
-nav ul li a, nav #logout {
+nav ul li a, nav #logout, nav #register {
     color: black;
     text-decoration: none;
     position: absolute;
