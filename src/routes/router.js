@@ -26,7 +26,6 @@ app.get('/receipts', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
 app.get('/deleted', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    yesterday = yesterday.toISOString();
 
     await itemModel.deleteMany({"active": false, "age": {$lte: yesterday}}).then(obj => {
         if (obj.deletedCount != 0) {
