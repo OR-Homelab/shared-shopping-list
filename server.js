@@ -2,6 +2,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 const path = require('path');
 
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGODB_URL).then(console.log('Connected to database!'));
+
 const passport = require('passport');
 const session = require('express-session');
 const User = require(path.join(__dirname, '/src/models/users.models'));

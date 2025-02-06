@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
-mongoose.connect(process.env.MONGODB_URL).then(console.log('Connected to user database!'));
+/* mongoose.connect(process.env.MONGODB_URL).then(console.log('Connected to user database!')); */
 
 const Schema = mongoose.Schema;
 
