@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/OR-Homelab/shared-shopping-list/issues"
   },
-  "homepage": "https://github.com/OR-Homelab/shared-shopping-list#readme"
+  "homepage": "https://github.com/OR-Homelab/shared-shopping-list#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
