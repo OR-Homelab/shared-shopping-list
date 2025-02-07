@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URL).then(console.log('Connected to item database!'));
+/* mongoose.connect(process.env.MONGODB_URL).then(console.log('Connected to item database!')); */
 
 const Schema = mongoose.Schema;
 
