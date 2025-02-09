@@ -25,7 +25,7 @@ const limiter = rateLimit({
 // Slow down request rate after 100 requests by the amount of requests times 200ms within a 15 minute window.
 const speedLimiter = slowDown({
     windowMs: 15 * 60 * 1000,
-    delayAfter: 10,
+    delayAfter: 100,
     delayMs: (hits) => hits * 100, // Slows down for hits * 100 ms.
 });
 
