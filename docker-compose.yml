@@ -23,4 +23,3 @@ volumes:
       type: none
       device: ./appdata/databasedata
       o: bind
-  # TODO: Maybe add .env folder to make it easier to change environment variables. (The database is saved so deletion and recreation is always an option)
