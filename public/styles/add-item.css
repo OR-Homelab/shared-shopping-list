@@ -25,7 +25,6 @@ h2 {
     background: var(--background-color-accent);
     padding: 30px;
     width: 60%;
-    position: absolute;
     transform: translate(30%, 30%);
     padding: 0px;
     -webkit-box-shadow: 0 30px 60px 0 var(--box-shadow-dark);
@@ -40,9 +39,10 @@ h2 {
     align-items: center;
 }
 
-  input[type=text] {
+  input[type=text], input[type=number] {
     background-color: var(--input-color-accent);
     border: none;
+    transform: translate(-3%);
     color: var(--text-color-focus);
     padding: 15px 32px;
     text-align: center;
@@ -59,6 +59,7 @@ h2 {
   input[type=button], input[type=submit] {
     background-color: var(--background-color);
     border: none;
+    transform: translate(-9%);
     color: white;
     padding: 15px 80px;
     text-align: center;
@@ -70,4 +71,8 @@ h2 {
     border-radius: 5px;
     margin: 5px 20px 40px 20px;
     transition: all 0.3s ease-in-out;
+  }
+
+  form {
+    white-space: pre;
   }
