@@ -29,7 +29,7 @@ app.get('/deleted', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => 
 
     await itemModel.deleteMany({"active": false, "age": {$lte: yesterday}}).then(obj => {
         if (obj.deletedCount != 0) {
-            console.log(`Deleted ${obj.deletedCount} old documents.`);
+            console.log(`Deleted ${obj.deletedCount} old document(s).`);
         }
     });
 
