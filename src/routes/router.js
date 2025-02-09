@@ -105,7 +105,7 @@ app.post('/add-item', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
     if (req.body.amount === "") {
         itemAmount = 1;
     } else {
-        itemAmount = parseFloat(req.body.price);
+        itemAmount = parseFloat(req.body.amount);
     }
     
 

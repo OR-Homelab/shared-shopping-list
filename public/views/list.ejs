@@ -5,7 +5,8 @@
     <div class="page-wrapper">
         <%- include('partials/nav.ejs') %>
         <main>
-            <h1 id="total-price">Total price: <%- total %></h1>
+            <h1 class="total-price">TOTAL PRICE:</h1>
+            <h1 class="total-price" id="total-price-amount"><%- total %></h1>
             <form action="/list" method="POST" id="submit-form">
                 <input type="hidden" value="" id="delete-id" name="deleteId">
                 <table>
