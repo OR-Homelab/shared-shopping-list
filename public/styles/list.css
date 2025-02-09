@@ -63,12 +63,12 @@ tbody tr td:last-child input {
   position: relative;
   transform: translateX(30%);
   text-align: center;
-  margin-top: 3vh;
+  margin-top: 1.5vh;
   margin-bottom: 0;
   font-weight: 900;
 }
 
 #total-price-amount {
   margin: 0;
-  margin-bottom: 1vh;
+  margin-bottom: 1.5vh;
 }
