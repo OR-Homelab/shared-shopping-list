@@ -57,3 +57,18 @@ tbody tr td:last-child input {
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
+
+.total-price {
+  width: 60%;
+  position: relative;
+  transform: translateX(30%);
+  text-align: center;
+  margin-top: 3vh;
+  margin-bottom: 0;
+  font-weight: 900;
+}
+
+#total-price-amount {
+  margin: 0;
+  margin-bottom: 1vh;
+}
