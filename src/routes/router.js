@@ -190,5 +190,9 @@ if (process.env.REQUIRE_PASSWORD_FOR_REGISTER === 'False') {
     });
 };
 
+app.get('*', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
+    res.render('404', {'page_name': '404'});
+});
+
 
 module.exports = app;
