@@ -58,7 +58,7 @@ app.post('/deleted', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) =>
 // List
 app.get('/list', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
     var sum = 0
-    await itemModel.aggregate([{ $group: { _id: null, amount: { $sum: "$total" } }}]).then(result => {
+    await itemModel.aggregate([{ $match: { active: true } }, { $group: { _id: null, amount: { $sum: "$total" } }}]).then(result => {
         if (result[0] === undefined) {
             return;
         }
