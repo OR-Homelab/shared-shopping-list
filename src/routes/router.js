@@ -194,8 +194,24 @@ if (process.env.REQUIRE_PASSWORD_FOR_REGISTER === 'False') {
 *  API
 */
 
+// API get items
 app.get('/api/get', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
     res.json({products: await itemModel.find({}).exec()});
+});
+
+// API add item
+app.post('/api/add', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+
+});
+
+// API remove items
+app.post('/api/remove', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+
+});
+
+// API edit item by ID
+app.post('/api/edit', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+
 });
 
 
