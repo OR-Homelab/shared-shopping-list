@@ -190,6 +190,15 @@ if (process.env.REQUIRE_PASSWORD_FOR_REGISTER === 'False') {
     });
 };
 
+/*
+*  API
+*/
+
+app.get('/api/get', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    res.json({products: await itemModel.find({}).exec()});
+});
+
+
 app.get('*', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
     res.render('404', {'page_name': '404'});
 });
