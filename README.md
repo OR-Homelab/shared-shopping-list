@@ -38,22 +38,22 @@ The installation process varies depending on the usage of the provided [docker-c
 1. Create a folder where the files for the application will be stored.
 2. Create a file named `docker-compose.yml`.
 3. Paste the contents of the [docker-compose](./docker-compose.yml) file into the newly created `docker-compose.yml` file.
-    - The environment variables of the [docker-compose](./docker-compose.yml) file should be changed before running the application.
-    - When registering the first user the `REQUIRE_PASSWORD_FOR_REGISTER` variable should be set to `False`. (**REMEMBER TO CHANGE THE VALUE BACK TO TRUE!**)
+   - The environment variables of the [docker-compose](./docker-compose.yml) file should be changed before running the application.
+   - When registering the first user the `REQUIRE_PASSWORD_FOR_REGISTER` variable should be set to `False`. (**REMEMBER TO CHANGE THE VALUE BACK TO TRUE!**)
 4. Run `docker-compose up` to start the application.
 
 ### Node.js installation
 
 1. Clone the repository:
-    - `git clone https://github.com/OR-Homelab/shared-shopping-list.git`
-    - `cd shared-shopping-list`
+   - `git clone https://github.com/OR-Homelab/shared-shopping-list.git`
+   - `cd shared-shopping-list`
 2. Install dependencies:
-    - `npm install`
+   - `npm install`
 3. Setup the .env file
-    - Remove the `.example` extension from the [.env.example](./.env.example) file. (*The file should be named '.env'*)
-    - Change the values in the `.env` file.
+   - Remove the `.example` extension from the [.env.example](./.env.example) file. (_The file should be named '.env'_)
+   - Change the values in the `.env` file.
 4. Start the application:
-    - `npm start`
+   - `npm start`
 
 The application should handle the database setup itself, as long as a proper MongoDB url is given in the `.env` file.
 
@@ -75,7 +75,7 @@ After these steps are completed, the registered users, will be able to register 
 
 ### Using the application
 
-1. Login to the application (*If a user is not already registered, read [Registering your first user](#registering-your-first-user)*)
+1. Login to the application (_If a user is not already registered, read [Registering your first user](#registering-your-first-user)_)
 2. Using the nav-bar on the left, items can be added and removed from the shopping list.
 
 ## Contributing
@@ -110,6 +110,7 @@ This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENS
 - express-session (MIT License)
 - express-rate-limit (MIT License)
 - path (MIT License)
+- express-fileupload (MIT License)
 
 ## Last Updated
 
