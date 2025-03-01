@@ -32,6 +32,7 @@
   "homepage": "https://github.com/OR-Homelab/shared-shopping-list#readme",
   "devDependencies": {
     "jest": "^29.7.0",
-    "mockingoose": "^2.16.2"
+    "mockingoose": "^2.16.2",
+    "nodemon": "^3.1.9"
   }
 }

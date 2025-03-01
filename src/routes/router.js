@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const express = require('express');
+const { SourceTextModule } = require('vm');
 const app = express.Router();
 
 
@@ -17,9 +18,9 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/receipts', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
-    res.render('add-item', {"page_name": "receipts"});
-});
+app.get("/receipts", connectEnsureLogin.ensureLoggedIn("/"), (req, res) => {
+    res.render("receipts", { page_name: "receipts" });
+  });
 
 
 // Deleted
@@ -201,12 +202,73 @@ app.get('/api/get', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => 
 
 // API add item
 app.post('/api/add', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    const item = req.body;
 
+    // Catch missing data fields.
+    if ( !('name' in item) || item.name === "" || !('amount' in item) || !('price' in item)) {
+        let err = new Error("Missing data inputs!");
+        console.log(err)
+        res.json({error: "Missing data inputs!", productAdded: false});
+        return err;
+    }
+
+    const itemName = item.name;
+
+    let itemPrice;
+    if (item.price === "") {
+        itemPrice = 0;
+    } else {
+        itemPrice = parseFloat(item.price);
+    }
+
+    let itemAmount;
+    if (item.amount === "") {
+        itemAmount = 1;
+    } else {
+        itemAmount = parseFloat(item.amount);
+    }
+    
+
+    itemModel.collection.insertOne({name: itemName, amount: itemAmount, price: itemPrice, total: itemPrice * itemAmount, active: true, age: new Date()}, (err) => {
+        if (err) {
+            console.log('Error while registering item.');
+            console.log(err);
+            res.json({error: err, productAdded: false});
+            return err;
+        }
+
+        console.log('Item registered.');
+    });
+
+    res.json({products: item, productAdded: true});
 });
 
 // API remove items
 app.post('/api/remove', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    const item = req.body;
 
+    // Catch missing data fields.
+    if ( !('name' in item) || !('id' in item)) {
+        let err = new Error("Missing data inputs!");
+        console.log(err)
+        res.json({error: "Missing data inputs!", productRemoved: false});
+        return err;
+    }
+
+    const itemName = item.name;
+    // TODO: Finish deleteId.
+    itemModel.collection.deleteId({}, (err) => {
+        if (err) {
+            console.log('Error while removing item.');
+            console.log(err);
+            res.json({error: err, productRemoved: false});
+            return err;
+        }
+
+        console.log('Item Removed.');
+    });
+
+    res.json({products: item, productRemoved: true});
 });
 
 // API edit item by ID
