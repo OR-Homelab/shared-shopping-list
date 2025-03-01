@@ -80,14 +80,14 @@ After these steps are completed, the registered users, will be able to register 
 
 ## Contributing
 
-1. If you plan on contributing new features, functions or extensions to the project you must first open an issue and discuss the feature with us.
+1. If you plan on contributing new features, functions or extensions to the project you must first open an issue.
 2. If you encounter any bugs please file an issue with an adequate explanation.
-3. For both features and bugs, you're more than welcome to present your own solution.
+3. For both features and bugs, you are more than welcome to present your own solution.
 4. License Compatibility – All contributions must comply with the project's license and should not include third-party code that isn't compatible.
 5. Code Style & Standards – Ensure that contributions follow the project's coding style and formatting guidelines and "DRY".
-6. Pull Request Guidelines – 1. Branch naming conventions (e.g., feature/feature-name or bugfix/issue-number).
-7. Pull Request Guidelines – 2. Clear commit messages following a standard format (e.g., Conventional Commits).
-8. Pull Request Guidelines – 3. Ensuring that the PR(s) include a description of the changes made.
+6. Pull Request naming - Branch naming conventions (e.g., feature/feature-name or bugfix/issue-number).
+7. Pull Request msg format – Clear commit messages following a standard format (e.g., Conventional Commits).
+8. Pull Request descriptions – Ensuring that the PR(s) include a description of the changes made.
 9. Testing Requirements – The submitted PR will need to pass any/all given testing requirements.
 10. Documentation Updates – Remember adding and notifying documentation updates when adding new features or making changes.
 11. Review & Feedback Process – All contributions will be reviewed by a project administrator. The administrator has full discretion to accept, reject, or request modifications based on their own criteria, which may include but are not limited to project vision, code quality, maintainability, and long-term goals. Contributions that do not align with the administrator’s standards or direction may not be merged, regardless of technical merit.
