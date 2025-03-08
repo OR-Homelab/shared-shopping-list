@@ -248,25 +248,25 @@ app.post('/api/remove', connectEnsureLogin.ensureLoggedIn('/'), async (req, res)
     const item = req.body;
 
     // Catch missing data fields.
-    if ( !('name' in item) || !('id' in item)) {
+    if (!('id' in item)) {
         let err = new Error("Missing data inputs!");
         console.log(err)
         res.json({error: "Missing data inputs!", productRemoved: false});
         return err;
     }
 
-    const itemName = item.name;
-    // TODO: Finish deleteId.
-    itemModel.collection.deleteId({}, (err) => {
-        if (err) {
-            console.log('Error while removing item.');
-            console.log(err);
-            res.json({error: err, productRemoved: false});
-            return err;
-        }
+    const itemId = item.id;
+    
+    try {
+        await itemModel.findByIdAndUpdate(itemId, {active: false, age: new Date()});
+    } catch (err) {
+        console.log('Error while removing item.');
+        console.log(err);
+        res.json({error: err, productRemoved: false});
+        return err;
+    }
 
-        console.log('Item Removed.');
-    });
+    console.log('Item Removed.');
 
     res.json({products: item, productRemoved: true});
 });
