@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/receipts', connectEnsureLogin.ensureLoggedIn('/'), (req, res) => {
-    res.render('add-item', {"page_name": "receipts"});
-});
+app.get("/receipts", connectEnsureLogin.ensureLoggedIn("/"), (req, res) => {
+    res.render("receipts", { page_name: "receipts" });
+  });
 
 
 // Deleted
@@ -201,17 +201,113 @@ app.get('/api/get', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => 
 
 // API add item
 app.post('/api/add', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    const item = req.body;
 
+    // Catch missing data fields.
+    if ( !('name' in item) || item.name === "" || !('amount' in item) || !('price' in item)) {
+        let err = new Error("Missing data inputs!");
+        console.log(err)
+        res.json({error: "Missing data inputs!", productAdded: false});
+        return err;
+    }
+
+    const itemName = item.name;
+
+    let itemPrice;
+    if (item.price === "") {
+        itemPrice = 0;
+    } else {
+        itemPrice = parseFloat(item.price);
+    }
+
+    let itemAmount;
+    if (item.amount === "") {
+        itemAmount = 1;
+    } else {
+        itemAmount = parseFloat(item.amount);
+    }
+    
+
+    itemModel.collection.insertOne({name: itemName, amount: itemAmount, price: itemPrice, total: itemPrice * itemAmount, active: true, age: new Date()}, (err) => {
+        if (err) {
+            console.log('Error while registering item.');
+            console.log(err);
+            res.json({error: err, productAdded: false});
+            return err;
+        }
+
+        console.log('Item registered.');
+    });
+
+    res.json({products: item, productAdded: true});
 });
 
 // API remove items
 app.post('/api/remove', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    const item = req.body;
 
+    // Catch missing data fields.
+    if (!('id' in item)) {
+        let err = new Error("Missing data inputs!");
+        console.log(err)
+        res.json({error: "Missing data inputs!", productRemoved: false});
+        return err;
+    }
+
+    const itemId = item.id;
+    
+    try {
+        await itemModel.findByIdAndUpdate(itemId, {active: false, age: new Date()});
+    } catch (err) {
+        console.log('Error while removing item.');
+        console.log(err);
+        res.json({error: err, productRemoved: false});
+        return err;
+    }
+
+    console.log('Item Removed.');
+
+    res.json({products: item, productRemoved: true});
 });
 
 // API edit item by ID
 app.post('/api/edit', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    const item = req.body;
 
+    // Catch missing data fields.
+    if (!('id' in item)) {
+        let err = new Error("Missing data inputs!");
+        console.log(err)
+        res.json({error: "Missing data inputs!", productEdited: false});
+        return err;
+    }
+
+    const itemId = item.id;
+    let itemName, itemAmount, itemPrice;
+
+    if ('name' in item) itemName = item.name;
+    if ('amount' in item) itemAmount = item.amount;
+    if ('price' in item) itemPrice = item.price;
+
+    try {
+        let editItem = await itemModel.findById(itemId);
+        
+        if (itemName === undefined) itemName = editItem.name;
+        if (itemAmount === undefined) itemAmount = editItem.amount;
+        if (itemPrice === undefined) itemPrice = editItem.price;
+        let total = itemPrice * itemAmount
+
+        await itemModel.findByIdAndUpdate(itemId, {'name': itemName, 'amount': itemAmount, 'price': itemPrice, 'total': total, 'age': new Date()});
+    } catch (err) {
+        console.log('Error while editing item.');
+        console.log(err);
+        res.json({error: err, productEdited: false});
+        return err;
+    }
+
+    console.log('Item edited.');
+
+    res.json({products: item, productEdited: true});
 });
 
 
