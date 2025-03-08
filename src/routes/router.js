@@ -273,7 +273,42 @@ app.post('/api/remove', connectEnsureLogin.ensureLoggedIn('/'), async (req, res)
 
 // API edit item by ID
 app.post('/api/edit', connectEnsureLogin.ensureLoggedIn('/'), async (req, res) => {
+    const item = req.body;
 
+    // Catch missing data fields.
+    if (!('id' in item)) {
+        let err = new Error("Missing data inputs!");
+        console.log(err)
+        res.json({error: "Missing data inputs!", productEdited: false});
+        return err;
+    }
+
+    const itemId = item.id;
+    let itemName, itemAmount, itemPrice;
+
+    if ('name' in item) itemName = item.name;
+    if ('amount' in item) itemAmount = item.amount;
+    if ('price' in item) itemPrice = item.price;
+
+    try {
+        let editItem = await itemModel.findById(itemId);
+        
+        if (itemName === undefined) itemName = editItem.name;
+        if (itemAmount === undefined) itemAmount = editItem.amount;
+        if (itemPrice === undefined) itemPrice = editItem.price;
+        let total = itemPrice * itemAmount
+
+        await itemModel.findByIdAndUpdate(itemId, {'name': itemName, 'amount': itemAmount, 'price': itemPrice, 'total': total, 'age': new Date()});
+    } catch (err) {
+        console.log('Error while editing item.');
+        console.log(err);
+        res.json({error: err, productEdited: false});
+        return err;
+    }
+
+    console.log('Item edited.');
+
+    res.json({products: item, productEdited: true});
 });
 
 
